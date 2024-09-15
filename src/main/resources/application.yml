@@ -1,0 +1,49 @@
+micronaut:
+  server:
+    multipart:
+      max-file-size: 20971520 # 20MB
+    cors:
+      enabled: true
+      configurations:
+        ui:
+          allowed-origins:
+            - ${CORS_DOMAIN:http://localhost:8080}
+  application:
+    name: live-service
+  il8n:
+    enabled: true
+  messages:
+    basename: messages
+    default-locale: en_US
+#  serde:
+#    maximum-nesting-depth: 2048
+netty:
+  default:
+    allocator:
+      max-order: 3
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: none
+        show_sql: true
+
+application:
+  max: 50
+
+mongodb:
+  uri: 'mongodb://writer:password@localhost:27017/admin'
+  uuid-representation: standard
+
+
+endpoints:
+  all:
+    enabled: true
+  caches:
+    enabled: true
+    sensitive: false
+
+jackson:
+  trim-strings: true
+
