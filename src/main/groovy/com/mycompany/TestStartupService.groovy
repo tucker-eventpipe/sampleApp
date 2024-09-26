@@ -8,6 +8,8 @@ import io.micronaut.runtime.event.annotation.EventListener
 import jakarta.inject.Inject
 import jakarta.inject.Singleton
 
+import java.util.stream.Stream
+
 @Singleton
 class TestStartupService {
     @Inject
@@ -16,19 +18,20 @@ class TestStartupService {
 
     @EventListener
     void onStartup(StartupEvent event) {
-        TestContent testContent = new TestContent(
-                id: 'test',
-                category: [
-                        one:'one',
-                        two:2,
-                        three: false
-                ]
-        )
+        1000.times {
+            TestContent testContent = new TestContent(
+                    id: "test-$it"
+            )
 
-//        TestContent testContent = new TestContent(
-//                number: 9.6438461538461538461538461538461538461538
-//        )
+            testContentRepository.save(testContent)
+        }
 
-        testContentRepository.save(testContent)
+        Stream<TestContent> stream = testContentRepository.getAll()
+
+        stream.forEach {
+            println it
+        }
     }
+
+
 }
